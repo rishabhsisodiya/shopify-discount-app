@@ -24,6 +24,7 @@ const UPDATE_PRICE = gql`
      productVariant {
        id
        price
+       compareAtPrice
      }
    }
  }
@@ -33,6 +34,7 @@ class EditProduct extends React.Component {
   state = {
     discount: '',
     price: '',
+    compareAtPrice: '',
     variantId: '',
     showToast: false,
   };
@@ -42,7 +44,7 @@ class EditProduct extends React.Component {
   }
 
   render() {
-    const { name, price, discount, variantId } = this.state;
+    const { name, price,compareAtPrice, discount, variantId } = this.state;
     return (
       <Mutation
         mutation={UPDATE_PRICE}
@@ -72,14 +74,14 @@ class EditProduct extends React.Component {
                         <FormLayout>
                           <FormLayout.Group>
                             <TextField
-                              prefix="$"
+                              prefix="Rs"
                               value={price}
                               disabled
                               label="Original price"
                               type="price"
                             />
                             <TextField
-                              prefix="$"
+                              prefix="Rs"
                               value={discount}
                               onChange={this.handleChange('discount')}
                               label="Discounted price"
@@ -98,6 +100,7 @@ class EditProduct extends React.Component {
                             onAction: () => {
                               const productVariableInput = {
                                 id: variantId,
+                                compareAtPrice: price,
                                 price: discount,
                               };
                               handleSubmit({
@@ -130,6 +133,7 @@ class EditProduct extends React.Component {
   itemToBeConsumed = () => {
     const item = store.get('item');
     const price = item.variants.edges[0].node.price;
+    const compareAtPrice = item.variants.edges[0].node.compareAtPrice;
     const variantId = item.variants.edges[0].node.id;
     const discounter = price * 0.1;
     this.setState({ price, variantId });
