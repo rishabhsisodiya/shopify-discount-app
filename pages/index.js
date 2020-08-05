@@ -13,7 +13,7 @@ class Index extends React.Component {
     return (
       <Page>
         <TitleBar
-          title="Sample App"
+          title="Discountify"
           primaryAction={{
             content: 'Select products',
             onAction: () => this.setState({ open: true }),
