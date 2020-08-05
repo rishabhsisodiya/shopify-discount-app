@@ -32,6 +32,7 @@ const UPDATE_PRICE = gql`
 
 class EditProduct extends React.Component {
   state = {
+    originalPrice:'',
     discount: '',
     price: '',
     compareAtPrice: '',
@@ -44,7 +45,7 @@ class EditProduct extends React.Component {
   }
 
   render() {
-    const { name, price,compareAtPrice, discount, variantId } = this.state;
+    const { name,originalPrice, price,compareAtPrice, discount, variantId } = this.state;
     return (
       <Mutation
         mutation={UPDATE_PRICE}
@@ -75,7 +76,7 @@ class EditProduct extends React.Component {
                           <FormLayout.Group>
                             <TextField
                               prefix="Rs"
-                              value={price}
+                              value={originalPrice}
                               disabled
                               label="Original price"
                               type="price"
@@ -136,7 +137,12 @@ class EditProduct extends React.Component {
     const compareAtPrice = item.variants.edges[0].node.compareAtPrice;
     const variantId = item.variants.edges[0].node.id;
     const discounter = price * 0.1;
-    this.setState({ price, variantId });
+    if (compareAtPrice>0) {
+      originalPrice=compareAtPrice;
+    }else{
+      originalPrice=price;
+    }
+    this.setState({ originalPrice,price, variantId });
     return (price - discounter).toFixed(2);
   };
 }
