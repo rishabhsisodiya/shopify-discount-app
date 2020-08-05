@@ -1,16 +1,17 @@
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { 
+import {
   Card,
   ResourceList,
   Stack,
   TextStyle,
   Thumbnail,
- } from '@shopify/polaris';
+} from '@shopify/polaris';
 import store from 'store-js';
 import { Redirect } from '@shopify/app-bridge/actions';
 import { Context } from '@shopify/app-bridge-react';
 
+import * as PropTypes from 'prop-types';
 
 const GET_PRODUCTS_BY_ID = gql`
   query getProducts($ids: [ID!]!) {
@@ -53,20 +54,21 @@ class ResourceListWithProducts extends React.Component {
         '/edit-products',
       );
     };
-      const twoWeeksFromNow = new Date(Date.now() + 12096e5).toDateString();
-      return (
-        <Query query={GET_PRODUCTS_BY_ID} variables={{ ids: store.get('ids') }}>
-          {({ data, loading, error }) => {
-            if (loading) return <div>Loading…</div>;
-            if (error) return <div>{error.message}</div>;
-            
-            return (
-              <Card>
-                <ResourceList
+
+    const twoWeeksFromNow = new Date(Date.now() + 12096e5).toDateString();
+    return (
+      <Query query={GET_PRODUCTS_BY_ID} variables={{ ids: store.get('ids') }}>
+        {({ data, loading, error }) => {
+          if (loading) { return <div>Loading…</div>; }
+          if (error) { return <div>{error.message}</div>; }
+          console.log(data);
+          return (
+            <Card>
+              <ResourceList
                 showHeader
                 resourceName={{ singular: 'Product', plural: 'Products' }}
                 items={data.nodes}
-                renderItem={item => {
+                renderItem={(item) => {
                   const media = (
                     <Thumbnail
                       source={
@@ -90,7 +92,8 @@ class ResourceListWithProducts extends React.Component {
                       onClick={() => {
                         store.set('item', item);
                         redirectToProduct();
-                      }}
+                      }
+                      }
                     >
                       <Stack>
                         <Stack.Item fill>
@@ -111,12 +114,12 @@ class ResourceListWithProducts extends React.Component {
                   );
                 }}
               />
-              </Card>
-            );
-          }}
-        </Query>
-      );
-    }
+            </Card>
+          );
+        }}
+      </Query>
+    );
   }
-  
+}
+
 export default ResourceListWithProducts;
