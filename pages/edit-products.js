@@ -137,6 +137,7 @@ class EditProduct extends React.Component {
     const compareAtPrice = item.variants.edges[0].node.compareAtPrice;
     const variantId = item.variants.edges[0].node.id;
     const discounter = price * 0.1;
+    const originalPrice='';
     if (compareAtPrice>0) {
       originalPrice=compareAtPrice;
     }else{
