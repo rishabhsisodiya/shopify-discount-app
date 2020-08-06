@@ -32,7 +32,7 @@ const UPDATE_PRICE = gql`
 
 class EditProduct extends React.Component {
   state = {
-    originalPrice:'',
+    original:'',
     discount: '',
     price: '',
     compareAtPrice: '',
@@ -45,7 +45,7 @@ class EditProduct extends React.Component {
   }
 
   render() {
-    const { name, price,originalPrice,compareAtPrice, discount, variantId } = this.state;
+    const { name, price,original,compareAtPrice, discount, variantId } = this.state;
     return (
       <Mutation
         mutation={UPDATE_PRICE}
@@ -136,14 +136,14 @@ class EditProduct extends React.Component {
     const price = item.variants.edges[0].node.price;
     const compareAtPrice = item.variants.edges[0].node.compareAtPrice;
     // console.table(item.variants.edges[0].node) 
-    const originalPrice = price;
+    const original = price;
     if(compareAtPrice) {
-      originalPrice = compareAtPrice;
+      original = compareAtPrice;
     }
     const variantId = item.variants.edges[0].node.id;
     const discounter = price * 0.1;
-    console.log(originalPrice);
-    this.setState({ originalPrice,compareAtPrice, price, variantId });
+    console.log(original);
+    this.setState({ original,compareAtPrice, price, variantId });
     return (price - discounter).toFixed(2);
   };
 }
