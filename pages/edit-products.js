@@ -137,7 +137,7 @@ class EditProduct extends React.Component {
     if (compareAtPrice) {
       console.log("original price: in"+compareAtPrice+"--"+price);  
     }else{
-      console.log("original price: "+price);  
+      console.log("original price: "+compareAtPrice+"--"+price);  
     }
     
     const variantId = item.variants.edges[0].node.id;
