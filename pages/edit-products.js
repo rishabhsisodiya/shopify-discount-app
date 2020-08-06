@@ -32,7 +32,7 @@ const UPDATE_PRICE = gql`
 
 class EditProduct extends React.Component {
   state = {
-    original='',
+    original:'',
     discount: '',
     price: '',
     compareAtPrice: '',
