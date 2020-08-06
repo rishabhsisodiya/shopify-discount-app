@@ -32,6 +32,7 @@ const GET_PRODUCTS_BY_ID = gql`
         variants(first: 1) {
           edges {
             node {
+              compareAtPrice
               price
               id
             }
@@ -61,7 +62,6 @@ class ResourceListWithProducts extends React.Component {
         {({ data, loading, error }) => {
           if (loading) { return <div>Loading…</div>; }
           if (error) { return <div>{error.message}</div>; }
-          console.log(data);
           return (
             <Card>
               <ResourceList
