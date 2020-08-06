@@ -134,10 +134,11 @@ class EditProduct extends React.Component {
     const item = store.get('item');
     const price = item.variants.edges[0].node.price;
     const compareAtPrice = item.variants.edges[0].node.compareAtPrice;
+    console.table(item.variants.edges[0].node)
     if (compareAtPrice) {
       console.log("original price: in"+compareAtPrice+"--"+price);  
     }else{
-      console.log("original price: "+item.variants.edges[0].node+"--"+price);  
+      console.log("original price: "+compareAtPrice+"--"+price);  
     }
     
     const variantId = item.variants.edges[0].node.id;
