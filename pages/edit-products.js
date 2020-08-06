@@ -76,7 +76,7 @@ class EditProduct extends React.Component {
                           <FormLayout.Group>
                             <TextField
                               prefix="Rs"
-                              value={originalPrice}
+                              value={price}
                               disabled
                               label="Original price"
                               type="price"
@@ -142,6 +142,7 @@ class EditProduct extends React.Component {
     }
     const variantId = item.variants.edges[0].node.id;
     const discounter = price * 0.1;
+    console.log(originalPrice);
     this.setState({ originalPrice,compareAtPrice, price, variantId });
     return (price - discounter).toFixed(2);
   };
