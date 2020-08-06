@@ -32,6 +32,7 @@ const UPDATE_PRICE = gql`
 
 class EditProduct extends React.Component {
   state = {
+    originalPrice:'',
     discount: '',
     price: '',
     compareAtPrice: '',
@@ -44,7 +45,7 @@ class EditProduct extends React.Component {
   }
 
   render() {
-    const { name, price,compareAtPrice, discount, variantId } = this.state;
+    const { name, price,originalPrice,compareAtPrice, discount, variantId } = this.state;
     return (
       <Mutation
         mutation={UPDATE_PRICE}
@@ -75,7 +76,7 @@ class EditProduct extends React.Component {
                           <FormLayout.Group>
                             <TextField
                               prefix="Rs"
-                              value={price}
+                              value={originalPrice}
                               disabled
                               label="Original price"
                               type="price"
@@ -134,16 +135,14 @@ class EditProduct extends React.Component {
     const item = store.get('item');
     const price = item.variants.edges[0].node.price;
     const compareAtPrice = item.variants.edges[0].node.compareAtPrice;
-    console.table(item.variants.edges[0].node)
-    if (compareAtPrice) {
-      console.log("original price: in"+compareAtPrice+"--"+price);  
-    }else{
-      console.log("original price: "+compareAtPrice+"--"+price);  
+    // console.table(item.variants.edges[0].node) 
+    const originalPrice = price;
+    if(compareAtPrice) {
+      originalPrice = compareAtPrice;
     }
-    
     const variantId = item.variants.edges[0].node.id;
     const discounter = price * 0.1;
-    this.setState({ compareAtPrice, price, variantId });
+    this.setState({ originalPrice,compareAtPrice, price, variantId });
     return (price - discounter).toFixed(2);
   };
 }
